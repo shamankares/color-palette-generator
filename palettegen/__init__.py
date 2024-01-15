@@ -10,7 +10,9 @@ def create_app(config=None):
   app = Flask(__name__, instance_relative_config=True)
 
   if config is None:
-    app.config.from_pyfile('config.py', silent=True)
+    if not app.config.from_pyfile('config.py', silent=True):
+      app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+      app.config['MAX_CONTENT_LENGTH'] = os.getenv('MAX_CONTENT_LENGTH')
   else:
     app.config.from_mapping(config)
   
