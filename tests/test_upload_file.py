@@ -10,29 +10,52 @@ def test_upload_invalid_property(client):
     "image": (resource/"tepi_pantai.jpg").open("rb")
   })
 
-  assert response_no_image.status_code == 400
-  assert response_no_num_of_colors.status_code == 400
+  res_no_image_json = response_no_image.get_json()
+  res_no_num_of_colors_json = response_no_num_of_colors.get_json()
+
+  assert res_no_image_json['statusCode'] == 400
+  assert res_no_image_json['status'] == 'failed'
+  assert res_no_image_json['message'] == "Missing 'image' property"
+
+  assert res_no_num_of_colors_json['statusCode'] == 400
+  assert res_no_num_of_colors_json['status'] == 'failed'
+  assert res_no_num_of_colors_json['message'] == "Missing 'numOfColors' property"
 
 def test_upload_invalid_num_of_colors(client):
   response = client.post("/generate", data={
     "image": (resource/"tepi_pantai.jpg").open("rb"),
     "numOfColors": "abcd"
   })
-  assert response.status_code == 400
+
+  res_json = response.get_json()
+
+  assert res_json['statusCode'] == 400
+  assert res_json['status'] == 'failed'
+  assert res_json['message'] == 'numOfColors must be a numeric string or number'
 
 def test_upload_invalid_image_file(client):
   response = client.post("/generate", data={
     "image": (resource/"test.txt").open("rb"),
     "numOfColors": 6
   })
-  assert response.status_code == 400
+
+  res_json = response.get_json()
+
+  assert res_json['statusCode'] == 400
+  assert res_json['status'] == 'failed'
+  assert res_json['message'] == 'The file must be an image file'
 
 def test_upload_too_large_image_file(client):
   response = client.post("/generate", data={
     "image": (resource/"cumi_naik_mouse.png").open("rb"),
     "numOfColors": 6
   })
-  assert response.status_code == 413
+
+  res_json = response.get_json()
+
+  assert res_json['statusCode'] == 413
+  assert res_json['status'] == 'failed'
+  assert res_json['message']
 
 def test_upload_image_file(client):
   num_of_colors = 6
@@ -40,9 +63,11 @@ def test_upload_image_file(client):
     "image": (resource/"tepi_pantai.jpg").open("rb"),
     "numOfColors": num_of_colors
   })
-  assert response.status_code == 200
+  res_json = response.get_json()
+  data = res_json['data']
 
-  data = response.get_json()
+  assert res_json['statusCode'] == 200
+  assert res_json['status'] == 'success'
   assert len(data["palette"]) == num_of_colors
   for color in data["palette"]:
     assert type(color) == dict
