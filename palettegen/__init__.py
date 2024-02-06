@@ -1,7 +1,7 @@
 from . import validator, palettegen
 
 from flask import Flask, request, jsonify
-from werkzeug.exceptions import HTTPException, abort
+from werkzeug.exceptions import HTTPException
 
 import os
 import json
