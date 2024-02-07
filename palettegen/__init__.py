@@ -8,6 +8,7 @@ import json
 
 def create_app(config=None):
   app = Flask(__name__, instance_relative_config=True)
+  app.config['MAX_CONTENT_LENGTH'] = 2 * 1000 * 1000 # default max file size
 
   if config is None:
     if not app.config.from_pyfile('config.py', silent=True):
