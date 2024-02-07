@@ -2,6 +2,7 @@ from . import validator, palettegen
 
 from flask import Flask, request, jsonify
 from werkzeug.exceptions import HTTPException
+from flask_cors import CORS
 
 import os
 import json
@@ -58,4 +59,6 @@ def create_app(config=None):
       'data': palette
     })
   
+  CORS(app)
+
   return app
