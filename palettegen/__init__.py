@@ -10,12 +10,14 @@ import json
 def create_app(config=None):
   app = Flask(__name__, instance_relative_config=True)
   app.config['MAX_CONTENT_LENGTH'] = 2 * 1000 * 1000 # default max file size
+  app.config['MAX_NUM_OF_COLORS'] = 20 # default max num of colors
   app.config['CORS'] = ['http://*:*', 'https://*:*'] # default CORS config
 
   if config is None:
     if not app.config.from_pyfile('config.py', silent=True):
       app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
       app.config['MAX_CONTENT_LENGTH'] = os.getenv('MAX_CONTENT_LENGTH')
+      app.config['MAX_NUM_OF_COLORS'] = os.getenv('MAX_NUM_OF_COLORS')
       app.config['CORS'] = json.loads(os.getenv('CORS'))
   else:
     app.config.from_mapping(config)
@@ -49,6 +51,8 @@ def create_app(config=None):
       
       validator.validate_num_of_colors(num_of_colors)
       validator.validate_image(image)
+
+      validator.validate_requested_num_of_colors(int(num_of_colors), app.config['MAX_NUM_OF_COLORS'])
     except HTTPException as err:
       raise err
 

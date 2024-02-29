@@ -19,3 +19,7 @@ def validate_image(image):
 
   if 'image' not in content_type:
     raise BadRequest(description='The file must be an image file')
+
+def validate_requested_num_of_colors(num_of_colors, limit):
+  if num_of_colors > limit:
+    raise BadRequest(description=f"The requested 'numOfColors' exceeds the specified limit (Max: {limit})")
