@@ -74,3 +74,15 @@ def test_upload_image_file(client):
     assert 'R' in color
     assert 'G' in color
     assert 'B' in color
+
+def test_upload_too_much_nums_of_colors(client):
+  response = client.post("/generate", data={
+    "image": (resource/"tepi_pantai.jpg").open("rb"),
+    "numOfColors": 50
+  })
+
+  res_json = response.get_json()
+
+  assert res_json['statusCode'] == 400
+  assert res_json['status'] == 'failed'
+  assert res_json['message']
