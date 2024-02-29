@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Generator</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <header class="box center">
+        <h1>Color Palette Generator</h1>
+    </header>
+    
+    <section class="box center" id="form-image">
+        <form id="uploadImage" method="POST" enctype="multipart/form-data">
+            <div class="upload">
+                <div class="form-input">
+                    <label for="image">Choose a image to generate a palette.</label><br>
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        accept=".jpg, .jpeg, .png"
+                        required />
+                </div>
+
+                <div class="form-input">
+                    <label for="numOfColors">Number of colors palette</label>
+                    <input type="number" name="numOfColors" id="numOfColors" min="1" value="3" required />
+                </div>
+
+                <div class="preview" id="preview"></div>
+            </div>
+            <div class="submit">
+                <button type="submit">Generate Palette</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="box center" id="result">
+        <h2>Palette</h2>
+        <div class="preview"></div>
+    </section>
+
+    <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
