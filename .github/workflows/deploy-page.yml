@@ -1,0 +1,47 @@
+name: Jekyll Build and Deploy
+
+on:
+  push:
+    branches: frontend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - name: Checkout the Content
+        uses: actions/checkout@v3
+        with:
+          ref: frontend
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Build Page
+        run: npm run build
+        env:
+          BACKEND_PROTOCOL: ${{ vars.BACKEND_PROTOCOL }}
+          BACKEND_DOMAIN: ${{ vars.BACKEND_DOMAIN }}
+          BACKEND_PORT: ${{ vars.BACKEND_PORT }}
+      - name: Upload Page
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: "dist/"
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/frontend'
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
