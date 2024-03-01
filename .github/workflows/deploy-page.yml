@@ -10,7 +10,7 @@ jobs:
     environment: github-pages
     steps:
       - name: Checkout the Content
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: frontend
       - name: Setup Node.js
@@ -24,7 +24,7 @@ jobs:
           BACKEND_DOMAIN: ${{ vars.BACKEND_DOMAIN }}
           BACKEND_PORT: ${{ vars.BACKEND_PORT }}
       - name: Upload Page
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: "dist/"
 
@@ -44,4 +44,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
