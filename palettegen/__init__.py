@@ -18,10 +18,10 @@ def create_app(config=None):
       app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
       if 'MAX_CONTENT_LENGTH' in os.environ:
-        app.config['MAX_CONTENT_LENGTH'] = os.getenv('MAX_CONTENT_LENGTH')
+        app.config['MAX_CONTENT_LENGTH'] = int(os.getenv('MAX_CONTENT_LENGTH'))
 
       if 'MAX_NUM_OF_COLORS' in os.environ:
-        app.config['MAX_NUM_OF_COLORS'] = os.getenv('MAX_NUM_OF_COLORS')
+        app.config['MAX_NUM_OF_COLORS'] = int(os.getenv('MAX_NUM_OF_COLORS'))
 
       if 'CORS' in os.environ:
         app.config['CORS'] = json.loads(os.getenv('CORS'))
