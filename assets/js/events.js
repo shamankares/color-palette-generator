@@ -77,7 +77,10 @@ export async function processImages(event) {
     .catch(renderError);
 }
 
-export function insertPostUrl() {
+export function loadAdditionalConfig() {
   const form = document.getElementById('uploadImage');
   form.setAttribute('action', `${process.env.BACKEND_PROTOCOL}://${process.env.BACKEND_DOMAIN}:${process.env.BACKEND_PORT}/generate`);
+  
+  const numOfColors = document.getElementById('numOfColors');
+  numOfColors.setAttribute('max', 16);
 }
