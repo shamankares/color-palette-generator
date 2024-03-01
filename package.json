@@ -6,12 +6,18 @@
   "private": true,
   "scripts": {
     "build": "parcel build index.html --public-url / --dist-dir dist",
-    "dev": "parcel index.html --public-url /"
+    "preview": "parcel index.html --public-url /",
+    "load-env": "node -r dotenv/config",
+    "dev": "npm-run-all load-env preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "parcel": "^2.12.0"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }
