@@ -49,7 +49,7 @@ export async function processImages(event) {
 
     const message = document.createElement('p');
     message.className = 'load-message';
-    message.textContent = 'Sedang diproses...';
+    message.textContent = 'Processing...';
     resultPreview.append(message);
 
     const form = document.getElementById('uploadImage');
