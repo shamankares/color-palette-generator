@@ -128,3 +128,11 @@ form {
   width: 70%;
   padding: 20px;
 }
+
+@media screen {
+  @media (max-width: 540px) {
+    body {
+      width: 100%;
+    }
+  }
+}
